@@ -1,0 +1,26 @@
+services:
+  # ─────────────────────────────────────────────────────
+  # PostgreSQL 16
+  # ─────────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: geomeasure_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: geomeasure
+      POSTGRES_PASSWORD: geomeasure_dev
+      POSTGRES_DB: geomeasure_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U geomeasure -d geomeasure_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  postgres_data:
+    driver: local

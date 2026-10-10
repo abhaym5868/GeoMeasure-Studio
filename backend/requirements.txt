@@ -1,0 +1,38 @@
+# ─────────────────────────────────────────────────────────────────
+# GeoMeasure Studio — Backend Dependencies
+# Python 3.11 | Pinned to minor versions for reproducibility
+# ─────────────────────────────────────────────────────────────────
+
+# ── Web Framework ────────────────────────────────────────────────
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+python-multipart==0.0.17
+
+# ── Data Validation & Settings ───────────────────────────────────
+pydantic==2.10.3
+pydantic-settings==2.6.1
+
+# ── Database ─────────────────────────────────────────────────────
+sqlalchemy==2.0.36
+greenlet==3.1.1
+alembic==1.14.0
+asyncpg==0.30.0
+# psycopg2-binary is used ONLY by Alembic migrations (sync driver)
+psycopg2-binary==2.9.10
+
+# ── Geospatial ───────────────────────────────────────────────────
+# NOTE: On macOS/arm64 with Python 3.11, these have pre-built wheels.
+# Install order matters: shapely and pyproj before geopandas/fiona.
+shapely==2.0.6
+pyproj==3.7.0
+fiona==1.10.1
+geopandas==1.0.1
+
+# ── File I/O ─────────────────────────────────────────────────────
+aiofiles==24.1.0
+
+# ── Structured Logging ───────────────────────────────────────────
+structlog==24.4.0
+
+# ── HTTP Client (used in tests) ───────────────────────────────────
+httpx==0.28.1

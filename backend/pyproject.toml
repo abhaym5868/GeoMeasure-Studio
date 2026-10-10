@@ -1,0 +1,31 @@
+[tool.pytest.ini_options]
+# Run from the backend directory: `pytest`
+testpaths = ["tests"]
+asyncio_mode = "auto"           # All async test functions auto-detected
+asyncio_default_fixture_loop_scope = "session"
+
+# Show extra test summary info
+addopts = [
+    "-v",                       # Verbose output
+    "--tb=short",               # Short tracebacks on failure
+    "--strict-markers",         # Fail on unknown markers
+    "-p", "no:warnings",        # Suppress DeprecationWarnings from third-party libs
+]
+
+# Custom markers (Phase 3+ will add more)
+markers = [
+    "unit: Unit tests that do not require external services",
+    "integration: Tests that require PostgreSQL and/or filesystem",
+    "slow: Tests that take more than 2 seconds",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]  # Line length handled by formatter
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
