@@ -53,6 +53,7 @@ def configure_logging(log_level: str = "INFO", log_format: str = "json") -> None
     # ── Shared pre-chain processors ───────────────────────────────
     shared_processors: list[structlog.types.Processor] = [
         structlog.contextvars.merge_contextvars,  # Merge bound context vars
+        structlog.stdlib.filter_by_level,         # Filter by log level
         structlog.stdlib.add_logger_name,         # Add 'logger' field
         structlog.stdlib.add_log_level,           # Add 'level' field
         structlog.stdlib.PositionalArgumentsFormatter(),
@@ -77,11 +78,8 @@ def configure_logging(log_level: str = "INFO", log_format: str = "json") -> None
             structlog.processors.ExceptionRenderer(),
             renderer,
         ],
-        wrapper_class=structlog.make_filtering_bound_logger(
-            getattr(logging, log_level.upper(), logging.INFO)
-        ),
-        context_class=dict,
-        logger_factory=structlog.PrintLoggerFactory(),
+        logger_factory=structlog.stdlib.LoggerFactory(),
+        wrapper_class=structlog.stdlib.BoundLogger,
         cache_logger_on_first_use=True,
     )
 

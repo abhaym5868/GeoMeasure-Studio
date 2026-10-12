@@ -14,7 +14,6 @@ Key points:
 """
 from __future__ import annotations
 
-import os
 import sys
 from logging.config import fileConfig
 from pathlib import Path
@@ -29,9 +28,9 @@ backend_dir = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(backend_dir))
 
 # ── Import models and settings so Alembic sees all tables and config ─────
+import app.db.base  # noqa: E402, F401 — ensures all model imports in base.py run
 from app.core.config import get_settings  # noqa: E402
 from app.db.base import Base  # noqa: E402  — must be after sys.path tweak
-import app.db.base  # noqa: F401 — ensures all model imports in base.py run
 
 # ── Alembic config object ─────────────────────────────────────────
 config = context.config
